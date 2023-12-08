@@ -1,11 +1,10 @@
 require('dotenv').config()
 
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN
 const getHomePage = (req, res) => {
     return res.send('Xin chào')
 }
 const getWebHook = (req, res) => {
-    let VERIFY_TOKEN = process.env.VERIFY_TOKEN
-
     let mode = req.query['hub.mode']
     let token = req.query['hub.verify_token']
     let challenge = req.query['hub.challenge']
@@ -27,6 +26,8 @@ const postWebHook = (req, res) => {
         body.entry.forEach(entry => {
             let webhook_event = entry.messaging[0]
             console.log(webhook_event)
+            let sender_psid = webhook_event.sender.id
+            console.log('sender PSID: ' + sender_psid)
         })
         res.status(200).send('EVENT_RECEIVED')
     } else {

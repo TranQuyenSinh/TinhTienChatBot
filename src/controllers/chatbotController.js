@@ -42,14 +42,38 @@ const postWebHook = (req, res) => {
 
 const handleMessage = (sender_psid, received_message) => {
     let res
-
     if (received_message.text) {
+        let result = calculate(received_message.text)
         res = {
-            text: `Bạn đã gửi tin nhắn ${received_message.text}`,
+            text: result,
         }
     }
 
     callSendAPI(sender_psid, res)
+}
+const formatNumer = num => {
+    Intl.NumberFormat('vi-VN').format(num)
+}
+const calculate = message => {
+    let arr = message.split(' ')
+    let types = arr.filter((item, index) => index % 2 != 0)
+    let quantities = arr.filter((item, index) => index % 2 == 0)
+    let result = ''
+    types.forEach((type, index) => {
+        let quantity = quantities[index]
+        switch (type) {
+            case 'ml':
+                result += `\n Mè lớn: ${quantity} x ${formatNumer(85000)} = ${formatNumer(quantity * 85000)}`
+                break
+            case 'mn':
+                result += `\n Mè nhỏ: ${quantity} x ${formatNumer(25000)} = ${formatNumer(quantity * 25000)}`
+                break
+            case 't':
+                result += `\n Trứng vịt: ${quantity} x ${formatNumer(50000)} = ${formatNumer(quantity * 50000)}`
+                break
+        }
+    })
+    return result
 }
 
 function callSendAPI(sender_psid, response) {

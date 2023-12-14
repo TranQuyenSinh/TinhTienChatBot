@@ -70,8 +70,8 @@ const calculate = message => {
                 result += `\nMè lớn: ${quantity} x ${formatNumer(85000)} = ${formatNumer(amount)}`
                 break
             case 'mn':
-                amount = quantity * 25000
-                result += `\nMè nhỏ: ${quantity} x ${formatNumer(25000)} = ${formatNumer(amount)}`
+                amount = quantity * 22000
+                result += `\nMè nhỏ: ${quantity} x ${formatNumer(22000)} = ${formatNumer(amount)}`
                 break
             case 't':
                 amount = quantity * 50000
